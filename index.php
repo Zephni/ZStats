@@ -6,13 +6,10 @@
 	</head>
 	<body>
 		<br /><br /><br />
-		<center>
+
 			<div ZStats='{"Type":"Bar", "Width":"230", "Height":"230"}' ZStatsItems='{"Item #1":"60%", "Item #2":"40%", "Item #3":"70%" , "Item #4":"80%", "Item #5":"30%"}'></div>
 
-			<br /><br /><br /><br /><br /><br /><br /><br /><br />
 
 			<div ZStats='{"Type":"Radial", "Width":"230", "Height":"230", "StrokeWidth":"14", "FillColor":"#F6F6F6"}' ZStatsItems='{"Conversion rate":"82%"}'></div>
-
-		</center>
 	</body>
 </html>
