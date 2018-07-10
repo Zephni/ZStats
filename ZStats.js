@@ -16,7 +16,8 @@ $(document).ready(function(){
 		Selector		: 	"div[ZStats]",
 		Attribute		: 	"ZStats",
 		ItemsAttribute	: 	"ZStatsItems",
-		AnimSpeed 		: 	1000
+		AnimSpeed 		: 	1000,
+		Color 	 		: 	"orange"
 	};
 
 	$("head").prepend('<style type="text/css">@import url("https://fonts.googleapis.com/css?family=Nunito");</style>');
@@ -53,15 +54,30 @@ $(document).ready(function(){
 			// Build
 			if(ElementCFG["Type"] == "Bar")
 			{
+				ElementCFG["Color"] = (ElementCFG["Color"] != undefined) ? ElementCFG["Color"] : ZStatsCFG.Color;
+
 				var First = true;
 				for (var key in Items){
 					if(Items.hasOwnProperty(key)) {
 						var Bar = $("<div>").css({"width":PctPer+"%", "height":"100%", "box-sizing":"border-box", "display":"inline-block", "position":"relative"});
-						var BarContent = $("<div>").css({"width":"70%", "max-width":"40px", "height":0, "background":"orange", "position":"absolute", "bottom":"0px", "left":"50%", "transform":"translateX(-50%)"});
-						var BarText = $("<div>").css({"transform":"rotate(90deg)", "position":"absolute", "top":parseInt(ElementCFG["Height"])+30, "white-space":"nowrap", "font-size":"16px", "font-weight":"bold"}).html(key);
+						var BarContent = $("<div>").css({"width":"70%", "max-width":"40px", "height":0, "background":ElementCFG["Color"], "position":"absolute", "bottom":"0px", "left":"50%", "transform":"translateX(-50%)"});
+
+						if(Items[key].slice(-1) == "%")
+						{
+							BarContent.animate({"height":Items[key]}, ZStatsCFG.AnimSpeed);
+						}
+						else
+						{
+							var Val = parseFloat(Items[key]);
+							var HeightPct = (ElementCFG.Max / 100) * Val;
+							BarContent.animate({"height":HeightPct+"%"}, ZStatsCFG.AnimSpeed);
+						}
+
+						var BarText = $("<div>").css({"position":"absolute", "top":parseInt(ElementCFG["Height"])+10, "white-space":"nowrap", "font-size":"16px", "font-weight":"bold", "writing-mode":"vertical-lr", "left":"50%", "transform":"translate(-50%, 0%)"}).html(key);
+
 						Bar.append(BarContent, BarText);
 						ZStatsElement.append(Bar);
-						BarContent.animate({"height":Items[key]}, ZStatsCFG.AnimSpeed);
+
 						First = false;
 					}
 				}
